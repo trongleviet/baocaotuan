@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Báo cáo kinh doanh tuần — Team nct28</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#F1EFE8;padding:20px}
+.rpt{max-width:960px;margin:0 auto;background:#fff;border-radius:8px;overflow:hidden;border:1px solid #D3D1C7;padding:0 0 24px}
+.hdr{padding:1.25rem 1.5rem 1rem;border-bottom:3px solid #0C447C;margin-bottom:1.25rem}
+.hdr-top{display:flex;justify-content:space-between;align-items:flex-start}
+.hdr-tag{font-size:11px;font-weight:700;color:#378ADD;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px}
+.hdr-title{font-size:22px;font-weight:700;color:#111}
+.hdr-title span{color:#0C447C}
+.hdr-sub{font-size:12px;color:#5F5E5A;margin-top:5px}
+.hdr-right{text-align:right;font-size:11px;color:#5F5E5A;line-height:1.9}
+.hdr-right strong{color:#111;font-weight:600}
+.pad{padding:0 1.5rem}
+.sec{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#888780;margin:1.25rem 0 .5rem;padding-bottom:4px;border-bottom:.5px solid #D3D1C7}
+.kpi4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:.5rem}
+.kpi{background:#F1EFE8;border-radius:6px;padding:.85rem 1rem}
+.kpi-lbl{font-size:11px;color:#888780;margin-bottom:5px}
+.kpi-val{font-size:21px;font-weight:700;color:#111}
+.kpi-sub{font-size:11px;margin-top:4px}
+.mkt3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:.5rem}
+.mkt{background:#F1EFE8;border-radius:6px;padding:.85rem 1rem;border-left:3px solid #0C447C}
+.mkt-lbl{font-size:11px;color:#5F5E5A;margin-bottom:4px}
+.mkt-val{font-size:19px;font-weight:700;color:#0C447C}
+.mkt-sub{font-size:11px;color:#5F5E5A;margin-top:4px}
+.tbl-wrap{overflow-x:auto;margin-bottom:.75rem}
+table{width:100%;border-collapse:collapse;font-size:12px}
+thead th{background:#F1EFE8;color:#5F5E5A;font-size:11px;font-weight:700;padding:6px 8px;text-align:right;border-bottom:2px solid #D3D1C7;white-space:nowrap}
+thead th.l{text-align:left}
+thead th.gc{border-left:2px solid #B5D4F4;background:#E6F1FB;color:#0C447C}
+thead th.gcr{border-right:2px solid #B5D4F4;background:#E6F1FB;color:#0C447C}
+tbody tr{border-bottom:.5px solid #EEEDE8}
+tbody tr:last-child{font-weight:700;background:#F1EFE8;border-top:1px solid #D3D1C7;border-bottom:none}
+tbody td{padding:6px 8px;color:#222;text-align:right;font-size:12px}
+tbody td.l{text-align:left;color:#888780;font-size:11px}
+.cp{color:#1D9E75;font-size:11px}.cn{color:#D85A30;font-size:11px}
+.nxet-list{display:flex;flex-direction:column;gap:8px}
+.nxet-card{border:1px solid #D3D1C7;border-radius:8px;overflow:hidden}
+.nxet-hdr{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;cursor:pointer;user-select:none;background:#F8F7F4}
+.nxet-hdr:hover{background:#F1EFE8}
+.nxet-name{font-size:13px;font-weight:700;color:#222;display:flex;align-items:center;gap:8px}
+.nxet-rank{font-size:10px;padding:2px 8px;border-radius:10px;background:#E6F1FB;color:#0C447C;font-weight:700}
+.nxet-arrow{font-size:11px;color:#888780;transition:transform .2s;flex-shrink:0}
+.nxet-arrow.open{transform:rotate(180deg)}
+.nxet-body{padding:12px 14px;border-top:1px solid #EEEDE8;display:none}
+.nxet-body.open{display:block}
+.nxet-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.nxet-sec-lbl{font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px;padding-bottom:3px}
+.lbl-pro{color:#0F6E56;border-bottom:1.5px solid #9FE1CB}
+.lbl-con{color:#993C1D;border-bottom:1.5px solid #F0997B}
+.lbl-plan{color:#185FA5;border-bottom:1.5px solid #85B7EB}
+.nxet-items{list-style:none;padding:0;margin:0}
+.nxet-items li{display:flex;gap:7px;font-size:12px;color:#222;line-height:1.5;padding:2px 0}
+.nxet-items li::before{content:'';width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:6px}
+.nxet-items.pro li::before{background:#1D9E75}
+.nxet-items.con li::before{background:#D85A30}
+.nxet-items.plan li::before{background:#378ADD}
+.footer{background:#F1EFE8;padding:12px 24px;border-top:1px solid #D3D1C7;font-size:11px;color:#888780;margin-top:16px}
+</style>
+</head>
+<body>
+<div class="rpt">
+<div class="hdr">
+  <div class="hdr-top">
+    <div>
+      <div class="hdr-tag">Chi nhánh Nguyễn Công Trứ · Team NCT28</div>
+      <div class="hdr-title">Báo cáo kinh doanh <span>tuần</span></div>
+      <div class="hdr-sub">25/05/2026 – 31/05/2026</div>
+    </div>
+    <div class="hdr-right">
+      <div><strong>Lập ngày</strong> 01/06/2026</div>
+      <div>Team nct28 · 5 thành viên</div>
+    </div>
+  </div>
+</div>
+
+<div class="pad">
+  <div class="sec">Tóm tắt tuần</div>
+  <div class="kpi4">
+    <div class="kpi">
+      <div class="kpi-lbl">Tổng GTGD</div>
+      <div class="kpi-val">8,168.80</div>
+      <div class="kpi-sub">Tỷ VND</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-lbl">Phí Net</div>
+      <div class="kpi-val">3,403.82</div>
+      <div class="kpi-sub">Tỷ VND</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-lbl">Tổng Nộp</div>
+      <div class="kpi-val">4,765.03</div>
+      <div class="kpi-sub">Tỷ VND</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-lbl">TK Mới</div>
+      <div class="kpi-val">11</div>
+      <div class="kpi-sub">Tài khoản</div>
+    </div>
+  </div>
+
+  <div class="sec">Chi tiết theo cá nhân</div>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="l">Tên MG</th>
+          <th class="gc">GTGD (Tỷ)</th>
+          <th class="gc">Phí Net (Tỷ)</th>
+          <th class="gc">Nộp (Tỷ)</th>
+          <th class="gcr">TK Mới</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="l">Lê Viết Trọng (2366)</td>
+          <td>5,972.02</td>
+          <td>3,234.44</td>
+          <td>2,737.58</td>
+          <td>47</td>
+        </tr>
+        <tr>
+          <td class="l">Nguyễn Huy Bình (1791)</td>
+          <td>1,068.36</td>
+          <td>34.69</td>
+          <td>1,033.67</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td class="l">Phạm Minh Đức (2554)</td>
+          <td>1,068.36</td>
+          <td>34.69</td>
+          <td>1,033.67</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td class="l">Đinh Thành Bảo (2878)</td>
+          <td>60.06</td>
+          <td>100.00</td>
+          <td>-39.94</td>
+          <td>3</td>
+        </tr>
+        <tr>
+          <td class="l">Huỳnh Thị Vững (3116)</td>
+          <td>0.00</td>
+          <td>0.00</td>
+          <td>0.00</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td class="l"><strong>Tổng Team NCT28</strong></td>
+          <td><strong>8,168.80</strong></td>
+          <td><strong>3,403.82</strong></td>
+          <td><strong>4,765.03</strong></td>
+          <td><strong>52</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sec">Nhận xét tuần & Kế hoạch</div>
+  <div class="nxet-list">
+    <div class="nxet-card">
+      <div class="nxet-hdr" onclick="this.nextElementSibling.classList.toggle('open');this.querySelector('.nxet-arrow').classList.toggle('open')">
+        <div class="nxet-name">
+          <span>👤 Lê Viết Trọng (2366)</span>
+          <span class="nxet-rank">TOP 1</span>
+        </div>
+        <div class="nxet-arrow">▼</div>
+      </div>
+      <div class="nxet-body">
+        <div class="nxet-cols">
+          <div>
+            <div class="nxet-sec-lbl lbl-pro">✓ Ưu điểm</div>
+            <ul class="nxet-items pro">
+              <li>GTGD cao nhất team (5,972 tỷ)</li>
+              <li>Mở được 47 TK mới</li>
+              <li>Duy trì tỷ lệ phí net cao</li>
+            </ul>
+          </div>
+          <div>
+            <div class="nxet-sec-lbl lbl-con">⚠ Nhược điểm</div>
+            <ul class="nxet-items con">
+              <li>Phí net cao do giao dịch lớn</li>
+            </ul>
+          </div>
+          <div>
+            <div class="nxet-sec-lbl lbl-plan">📋 Kế hoạch tuần sau</div>
+            <ul class="nxet-items plan">
+              <li>Tiếp tục mở TK mới</li>
+              <li>Tối ưu phí net</li>
+              <li>Duy trì GTGD 5,500+</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nxet-card">
+      <div class="nxet-hdr" onclick="this.nextElementSibling.classList.toggle('open');this.querySelector('.nxet-arrow').classList.toggle('open')">
+        <div class="nxet-name">
+          <span>👤 Nguyễn Huy Bình (1791)</span>
+          <span class="nxet-rank">TOP 2</span>
+        </div>
+        <div class="nxet-arrow">▼</div>
+      </div>
+      <div class="nxet-body">
+        <div class="nxet-cols">
+          <div>
+            <div class="nxet-sec-lbl lbl-pro">✓ Ưu điểm</div>
+            <ul class="nxet-items pro">
+              <li>GTGD ổn định (1,068 tỷ)</li>
+              <li>Nộp tiền liên tục</li>
+              <li>Mở 1 TK mới</li>
+            </ul>
+          </div>
+          <div>
+            <div class="nxet-sec-lbl lbl-con">⚠ Nhược điểm</div>
+            <ul class="nxet-items con">
+              <li>Phí net thấp (34.69 tỷ)</li>
+            </ul>
+          </div>
+          <div>
+            <div class="nxet-sec-lbl lbl-plan">📋 Kế hoạch tuần sau</div>
+            <ul class="nxet-items plan">
+              <li>Tăng GTGD thêm 20%</li>
+              <li>Mở 3-5 TK mới</li>
+              <li>Cải thiện phí net</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nxet-card">
+      <div class="nxet-hdr" onclick="this.nextElementSibling.classList.toggle('open');this.querySelector('.nxet-arrow').classList.toggle('open')">
+        <div class="nxet-name">
+          <span>👤 Phạm Minh Đức (2554)</span>
+          <span class="nxet-rank">TOP 3</span>
+        </div>
+        <div class="nxet-arrow">▼</div>
+      </div>
+      <div class="nxet-body">
+        <div class="nxet-cols">
+          <div>
+            <div class="nxet-sec-lbl lbl-pro">✓ Ưu điểm</div>
+            <ul class="nxet-items pro">
+              <li>GTGD tương đương (1,068 tỷ)</li>
+              <li>Mở 1 TK mới</li>
+            </ul>
+          </div>
+          <div>
+            <div class="nxet-sec-lbl lbl-con">⚠ Nhược điểm</div>
+            <ul class="nxet-items con">
+              <li>Phí net thấp</li>
+              <li>Cần tăng cường hoạt động</li>
+            </ul>
+          </div>
+          <div>
+            <div class="nxet-sec-lbl lbl-plan">📋 Kế hoạch tuần sau</div>
+            <ul class="nxet-items plan">
+              <li>Tăng mở TK mới lên 5-8</li>
+              <li>Cải thiện GTGD</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nxet-card">
+      <div class="nxet-hdr" onclick="this.nextElementSibling.classList.toggle('open');this.querySelector('.nxet-arrow').classList.toggle('open')">
+        <div class="nxet-name">
+          <span>👤 Đinh Thành Bảo (2878)</span>
+          <span class="nxet-rank">CẦN HỖ TRỢ</span>
+        </div>
+        <div class="nxet-arrow">▼</div>
+      </div>
+      <div class="nxet-body">
+        <div class="nxet-cols">
+          <div>
+            <div class="nxet-sec-lbl lbl-pro">✓ Ưu điểm</div>
+            <ul class="nxet-items pro">
+              <li>Mở được 3 TK mới</li>
+            </ul>
+          </div>
+          <div>
+            <div class="nxet-sec-lbl lbl-con">⚠ Nhược điểm</div>
+            <ul class="nxet-items con">
+              <li>GTGD rất thấp (60.06 tỷ)</li>
+              <li>Phí net âm (-39.94 tỷ)</li>
+              <li>Cần tăng cường hoạt động</li>
+            </ul>
+          </div>
+          <div>
+            <div class="nxet-sec-lbl lbl-plan">📋 Kế hoạch tuần sau</div>
+            <ul class="nxet-items plan">
+              <li>Tập trung tăng GTGD</li>
+              <li>Mở 5-10 TK mới</li>
+              <li>Nhận hỗ trợ từ team</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nxet-card">
+      <div class="nxet-hdr" onclick="this.nextElementSibling.classList.toggle('open');this.querySelector('.nxet-arrow').classList.toggle('open')">
+        <div class="nxet-name">
+          <span>👤 Huỳnh Thị Vững (3116)</span>
+          <span class="nxet-rank">CHƯA CÓ DỮ LIỆU</span>
+        </div>
+        <div class="nxet-arrow">▼</div>
+      </div>
+      <div class="nxet-body">
+        <div class="nxet-cols">
+          <div>
+            <div class="nxet-sec-lbl lbl-con">⚠ Nhận xét</div>
+            <ul class="nxet-items con">
+              <li>Chưa cung cấp dữ liệu</li>
+              <li>Cần cập nhật thông tin</li>
+            </ul>
+          </div>
+          <div>
+            <div class="nxet-sec-lbl lbl-plan">📋 Kế hoạch</div>
+            <ul class="nxet-items plan">
+              <li>Cung cấp dữ liệu chi tiết</li>
+              <li>Tham gia báo cáo đầy đủ</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <strong>Báo cáo được tạo tự động</strong> — Team NCT28, Chi nhánh Nguyễn Công Trứ
+</div>
+
+</div>
+
+<script>
+document.querySelectorAll('.nxet-hdr').forEach(hdr => {
+  hdr.addEventListener('click', function() {
+    const body = this.nextElementSibling;
+    const arrow = this.querySelector('.nxet-arrow');
+    body.classList.toggle('open');
+    arrow.classList.toggle('open');
+  });
+});
+</script>
+</body>
+</html>
